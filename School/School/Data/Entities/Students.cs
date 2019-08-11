@@ -7,6 +7,7 @@ namespace School.Data.Entities
     {
         public Students()
         {
+            Enrollments = new HashSet<Enrollments>();
             QualificationIdCourseNoteNavigation = new HashSet<Qualification>();
             QualificationIdStudentNoteNavigation = new HashSet<Qualification>();
         }
@@ -16,6 +17,7 @@ namespace School.Data.Entities
         public string Telephone { get; set; }
         public string Address { get; set; }
 
+        public virtual ICollection<Enrollments> Enrollments { get; set; }
         public virtual ICollection<Qualification> QualificationIdCourseNoteNavigation { get; set; }
         public virtual ICollection<Qualification> QualificationIdStudentNoteNavigation { get; set; }
     }

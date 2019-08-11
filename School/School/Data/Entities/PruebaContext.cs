@@ -36,7 +36,7 @@ namespace School.Data.Entities
             modelBuilder.Entity<Courses>(entity =>
             {
                 entity.HasKey(e => e.IdCourse)
-                    .HasName("PK__Courses__8982E30966C83D12");
+                    .HasName("PK__Courses__8982E309ED714746");
 
                 entity.Property(e => e.IdCourse).HasColumnName("idCourse");
 
@@ -54,19 +54,31 @@ namespace School.Data.Entities
             modelBuilder.Entity<Enrollments>(entity =>
             {
                 entity.HasKey(e => e.IdEnrollment)
-                    .HasName("PK__Enrollme__59432236627B4144");
+                    .HasName("PK__Enrollme__59432236AADB6BED");
 
                 entity.Property(e => e.IdEnrollment).HasColumnName("idEnrollment");
 
                 entity.Property(e => e.IdCourse).HasColumnName("idCourse");
 
                 entity.Property(e => e.IdStudent).HasColumnName("idStudent");
+
+                entity.HasOne(d => d.IdCourseNavigation)
+                    .WithMany(p => p.Enrollments)
+                    .HasForeignKey(d => d.IdCourse)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("CoursesEnrollment");
+
+                entity.HasOne(d => d.IdStudentNavigation)
+                    .WithMany(p => p.Enrollments)
+                    .HasForeignKey(d => d.IdStudent)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("StudentEnrollment");
             });
 
             modelBuilder.Entity<Qualification>(entity =>
             {
                 entity.HasKey(e => e.IdQualification)
-                    .HasName("PK__Qualific__7549CFDB1DA3A5E7");
+                    .HasName("PK__Qualific__7549CFDBE01B4686");
 
                 entity.Property(e => e.IdQualification).HasColumnName("idQualification");
 
@@ -79,23 +91,25 @@ namespace School.Data.Entities
                 entity.HasOne(d => d.IdCourseNoteNavigation)
                     .WithMany(p => p.QualificationIdCourseNoteNavigation)
                     .HasForeignKey(d => d.IdCourseNote)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("QualificationEnrollmentNota");
 
                 entity.HasOne(d => d.IdStudentNoteNavigation)
                     .WithMany(p => p.QualificationIdStudentNoteNavigation)
                     .HasForeignKey(d => d.IdStudentNote)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("QualificationEnrollment");
             });
 
             modelBuilder.Entity<Students>(entity =>
             {
                 entity.HasKey(e => e.IdStudent)
-                    .HasName("PK__Students__35B1F88AF74B13F6");
+                    .HasName("PK__Students__35B1F88ADA674A58");
 
                 entity.Property(e => e.IdStudent).HasColumnName("idStudent");
 
                 entity.Property(e => e.Address)
-                    .HasMaxLength(50)
+                    .HasMaxLength(15)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
@@ -103,7 +117,9 @@ namespace School.Data.Entities
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Telephone).HasMaxLength(15);
+                entity.Property(e => e.Telephone)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
             });
         }
     }

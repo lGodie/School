@@ -1,0 +1,19 @@
+﻿@model School.Models.StudentsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+<div class="form-group">
+    <label asp-for="IdStudent" class="control-label"></label>
+    <select asp-for="IdStudent" asp-items="Model.Students" class="form-control"></select>
+    <span asp-validation-for="IdStudent" class="text-danger"></span>
+</div>
+

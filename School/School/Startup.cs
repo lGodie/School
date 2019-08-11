@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 //using EFGetStarted.AspNetCore.ExistingDb.Models;
 using Microsoft.EntityFrameworkCore;
 using School.Data.Entities;
+using School.Helpers;
 
 namespace School
 {
@@ -33,6 +34,8 @@ namespace School
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            services.AddTransient<StudentHelper>();
 
             var connection = @"Data Source=DESKTOP-ENU8D7B;Initial Catalog=Prueba;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             services.AddDbContext<PruebaContext>(options => options.UseSqlServer(connection));

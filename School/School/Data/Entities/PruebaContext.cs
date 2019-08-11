@@ -17,6 +17,7 @@ namespace School.Data.Entities
 
         public virtual DbSet<Courses> Courses { get; set; }
         public virtual DbSet<Enrollments> Enrollments { get; set; }
+        public virtual DbSet<Qualification> Qualification { get; set; }
         public virtual DbSet<Students> Students { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -53,25 +54,37 @@ namespace School.Data.Entities
             modelBuilder.Entity<Enrollments>(entity =>
             {
                 entity.HasKey(e => e.IdEnrollment)
-                    .HasName("PK__Enrollme__59432236A0FDB9EC");
+                    .HasName("PK__Enrollme__59432236627B4144");
 
                 entity.Property(e => e.IdEnrollment).HasColumnName("idEnrollment");
 
                 entity.Property(e => e.IdCourse).HasColumnName("idCourse");
 
                 entity.Property(e => e.IdStudent).HasColumnName("idStudent");
+            });
 
-                entity.Property(e => e.Qualification).HasColumnName("qualification");
+            modelBuilder.Entity<Qualification>(entity =>
+            {
+                entity.HasKey(e => e.IdQualification)
+                    .HasName("PK__Qualific__7549CFDB1DA3A5E7");
 
-                entity.HasOne(d => d.IdCourseNavigation)
-                    .WithMany(p => p.Enrollments)
-                    .HasForeignKey(d => d.IdCourse)
-                    .HasConstraintName("CoursesEnrollment");
+                entity.Property(e => e.IdQualification).HasColumnName("idQualification");
 
-                entity.HasOne(d => d.IdStudentNavigation)
-                    .WithMany(p => p.Enrollments)
-                    .HasForeignKey(d => d.IdStudent)
-                    .HasConstraintName("StudentEnrollment");
+                entity.Property(e => e.IdCourseNote).HasColumnName("idCourseNote");
+
+                entity.Property(e => e.IdStudentNote).HasColumnName("idStudentNote");
+
+                entity.Property(e => e.Qualification1).HasColumnName("Qualification");
+
+                entity.HasOne(d => d.IdCourseNoteNavigation)
+                    .WithMany(p => p.QualificationIdCourseNoteNavigation)
+                    .HasForeignKey(d => d.IdCourseNote)
+                    .HasConstraintName("QualificationEnrollmentNota");
+
+                entity.HasOne(d => d.IdStudentNoteNavigation)
+                    .WithMany(p => p.QualificationIdStudentNoteNavigation)
+                    .HasForeignKey(d => d.IdStudentNote)
+                    .HasConstraintName("QualificationEnrollment");
             });
 
             modelBuilder.Entity<Students>(entity =>

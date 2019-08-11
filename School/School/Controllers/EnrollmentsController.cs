@@ -11,12 +11,12 @@ using School.Models;
 
 namespace School.Controllers
 {
-    public class StudentsController : Controller
+    public class EnrollmentsController : Controller
     {
         private readonly PruebaContext _context;
         private readonly StudentHelper _studentHelper;
 
-        public StudentsController(PruebaContext context,
+        public EnrollmentsController(PruebaContext context,
           StudentHelper Helper)
         {
             _context = context;
@@ -24,18 +24,18 @@ namespace School.Controllers
 
         }
 
-        //public StudentsController(PruebaContext context)
-        //{
-        //    _context = context;
-        //}
-
-        // GET: Students
+        // GET: Enrollments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.ToListAsync());
+            var model = new StudentsViewModel
+            {
+                Students = this._studentHelper.GetComboStudents(),
+
+            };
+            return View(model);
         }
 
-        // GET: Students/Details/5
+        // GET: Enrollments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,38 +43,39 @@ namespace School.Controllers
                 return NotFound();
             }
 
-            var students = await _context.Students
-                .FirstOrDefaultAsync(m => m.IdStudent == id);
-            if (students == null)
+            var enrollments = await _context.Enrollments
+                .FirstOrDefaultAsync(m => m.IdEnrollment == id);
+            if (enrollments == null)
             {
                 return NotFound();
             }
 
-            return View(students);
+            return View(enrollments);
         }
 
-        // GET: Students/Create
+        // GET: Enrollments/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
-        
+        // POST: Enrollments/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( Students students)
+        public async Task<IActionResult> Create([Bind("IdEnrollment,IdStudent,IdCourse,Qualification")] Enrollments enrollments)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(students);
+                _context.Add(enrollments);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(students);
+            return View(enrollments);
         }
 
-        // GET: Students/Edit/5
+        // GET: Enrollments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,21 +83,22 @@ namespace School.Controllers
                 return NotFound();
             }
 
-            var students = await _context.Students.FindAsync(id);
-            if (students == null)
+            var enrollments = await _context.Enrollments.FindAsync(id);
+            if (enrollments == null)
             {
                 return NotFound();
             }
-            return View(students);
+            return View(enrollments);
         }
 
-        // POST: Students/Edit/5
-        
+        // POST: Enrollments/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Students students)
+        public async Task<IActionResult> Edit(int id, [Bind("IdEnrollment,IdStudent,IdCourse,Qualification")] Enrollments enrollments)
         {
-            if (id != students.IdStudent)
+            if (id != enrollments.IdEnrollment)
             {
                 return NotFound();
             }
@@ -105,12 +107,12 @@ namespace School.Controllers
             {
                 try
                 {
-                    _context.Update(students);
+                    _context.Update(enrollments);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentsExists(students.IdStudent))
+                    if (!EnrollmentsExists(enrollments.IdEnrollment))
                     {
                         return NotFound();
                     }
@@ -121,10 +123,10 @@ namespace School.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(students);
+            return View(enrollments);
         }
 
-        // GET: Students/Delete/5
+        // GET: Enrollments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,30 +134,30 @@ namespace School.Controllers
                 return NotFound();
             }
 
-            var students = await _context.Students
-                .FirstOrDefaultAsync(m => m.IdStudent == id);
-            if (students == null)
+            var enrollments = await _context.Enrollments
+                .FirstOrDefaultAsync(m => m.IdEnrollment == id);
+            if (enrollments == null)
             {
                 return NotFound();
             }
 
-            return View(students);
+            return View(enrollments);
         }
 
-        // POST: Students/Delete/5
+        // POST: Enrollments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var students = await _context.Students.FindAsync(id);
-            _context.Students.Remove(students);
+            var enrollments = await _context.Enrollments.FindAsync(id);
+            _context.Enrollments.Remove(enrollments);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentsExists(int id)
+        private bool EnrollmentsExists(int id)
         {
-            return _context.Students.Any(e => e.IdStudent == id);
+            return _context.Enrollments.Any(e => e.IdEnrollment == id);
         }
     }
 }

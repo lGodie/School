@@ -36,6 +36,9 @@ namespace School
             });
 
             services.AddTransient<StudentHelper>();
+            services.AddTransient<QualificationHelper>();
+            services.AddTransient<CourseHelper>();
+
 
             var connection = @"Data Source=DESKTOP-ENU8D7B;Initial Catalog=Prueba;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             services.AddDbContext<PruebaContext>(options => options.UseSqlServer(connection));

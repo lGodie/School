@@ -4,16 +4,107 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Matriculas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Crear nueva matricula</a>
 </p>
 
 
-<div class="form-group">
+<div class="col-4">
     <label asp-for="IdStudent" class="control-label"></label>
     <select asp-for="IdStudent" asp-items="Model.Students" class="form-control"></select>
     <span asp-validation-for="IdStudent" class="text-danger"></span>
 </div>
 
+
+<h1 class="alert">Lista de Matriculas</h1>
+
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdStudent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Courses)
+            </th>
+
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Enrollments)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdStudent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdCourse)
+                </td>
+
+                <td>
+                    <div class="btn-group">
+                        <a asp-action="Edit" asp-route-id="@item.IdEnrollment" class="btn btn-warning">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.IdEnrollment" class="btn btn-info">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.IdEnrollment" class="btn btn-danger">Eliminar</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model.Qualification.Count == 0)
+{
+    <h5>No hay cursos matriculados.</h5>
+}
+else
+{
+    <h1>Cursos matriculados</h1>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Qualification.FirstOrDefault().IdCourseNote)
+                    </th>*@
+                <th>
+                    Curso
+                </th>
+                <th>
+                    Estudiantes
+                </th>
+                <th>
+                    Calificación
+                </th>
+
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Qualification)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdCourseNote)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdStudentNote)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Qualification1)
+                    </td>
+
+                    <td>
+                        <div class="btn-group">
+                            <a asp-controller="Qualifications" asp-action="Edit" asp-route-id="@item.IdQualification" class="btn btn-warning">Editar</a>
+                            <a asp-controller="Qualifications" asp-action="Details" asp-route-id="@item.IdQualification" class="btn btn-info">Detalles</a>
+                            <a asp-controller="Qualifications" asp-action="Delete" asp-route-id="@item.IdQualification" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -15,13 +15,20 @@ namespace School.Controllers
     {
         private readonly PruebaContext _context;
         private readonly StudentHelper _studentHelper;
+        private readonly CourseHelper _courseHelper;
+        private readonly QualificationHelper _QualificationHelper;
+
+
 
         public EnrollmentsController(PruebaContext context,
-          StudentHelper Helper)
+          StudentHelper Helper,
+          CourseHelper CourseHelper,
+          QualificationHelper QualificationHelper)
         {
             _context = context;
             _studentHelper = Helper;
-
+            _courseHelper = CourseHelper;
+            _QualificationHelper = QualificationHelper;
         }
 
         // GET: Enrollments
@@ -29,7 +36,12 @@ namespace School.Controllers
         {
             var model = new StudentsViewModel
             {
+
                 Students = this._studentHelper.GetComboStudents(),
+                Enrollments = this._studentHelper.ListEnrollment(),
+                Courses = this._courseHelper.ListCourses(),
+                Qualification = this._QualificationHelper.ListQualification()
+
 
             };
             return View(model);
@@ -60,11 +72,10 @@ namespace School.Controllers
         }
 
         // POST: Enrollments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdEnrollment,IdStudent,IdCourse,Qualification")] Enrollments enrollments)
+        public async Task<IActionResult> Create(Enrollments enrollments)
         {
             if (ModelState.IsValid)
             {
@@ -92,11 +103,10 @@ namespace School.Controllers
         }
 
         // POST: Enrollments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdEnrollment,IdStudent,IdCourse,Qualification")] Enrollments enrollments)
+        public async Task<IActionResult> Edit(int id, Enrollments enrollments)
         {
             if (id != enrollments.IdEnrollment)
             {

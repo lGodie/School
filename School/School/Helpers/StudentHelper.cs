@@ -26,11 +26,20 @@ namespace School.Helpers
 
         list.Insert(0, new SelectListItem
         {
-            Text = "(Select a student...)",
+            Text = "(Seleccione un estudiante...)",
             Value = "0"
         });
 
         return list;
     }
-}
+
+        public List<Enrollments> ListEnrollment()
+        {
+            var list = this._context.Enrollments.ToList();
+
+            return list;
+
+        }
+
+    }
 }

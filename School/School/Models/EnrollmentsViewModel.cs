@@ -9,10 +9,10 @@ namespace School.Models
     public class EnrollmentsViewModel
     {
         [Required]
-        [Display(Name = "Id Student")]
+        [Display(Name = "Estudiante")]
         public int? IdStudent { get; set; }
         [Required]
-        [Display(Name = "Id Course")]
+        [Display(Name = "Curso")]
 
         public int? IdCourse { get; set; }
     }

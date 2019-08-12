@@ -1,0 +1,51 @@
+﻿@model IEnumerable<School.Data.Entities.Qualification>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear nueva calificación</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.IdCourseNoteNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdStudentNoteNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Qualification1)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCourseNoteNavigation.IdEnrollment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdStudentNoteNavigation.IdEnrollment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qualification1)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a asp-action="Edit" asp-route-id="@item.IdQualification" class="btn btn-warning">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.IdQualification" class="btn btn-info">Detalless</a>
+                    <a asp-action="Delete" asp-route-id="@item.IdQualification" class="btn btn-danger">Eliminar</a>
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

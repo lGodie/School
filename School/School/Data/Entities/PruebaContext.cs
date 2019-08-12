@@ -54,7 +54,7 @@ namespace School.Data.Entities
             modelBuilder.Entity<Enrollments>(entity =>
             {
                 entity.HasKey(e => e.IdEnrollment)
-                    .HasName("PK__Enrollme__59432236AADB6BED");
+                    .HasName("PK__Enrollme__59432236556633C1");
 
                 entity.Property(e => e.IdEnrollment).HasColumnName("idEnrollment");
 
@@ -65,20 +65,18 @@ namespace School.Data.Entities
                 entity.HasOne(d => d.IdCourseNavigation)
                     .WithMany(p => p.Enrollments)
                     .HasForeignKey(d => d.IdCourse)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("CoursesEnrollment");
 
                 entity.HasOne(d => d.IdStudentNavigation)
                     .WithMany(p => p.Enrollments)
                     .HasForeignKey(d => d.IdStudent)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("StudentEnrollment");
             });
 
             modelBuilder.Entity<Qualification>(entity =>
             {
                 entity.HasKey(e => e.IdQualification)
-                    .HasName("PK__Qualific__7549CFDBE01B4686");
+                    .HasName("PK__Qualific__7549CFDBE1CFB262");
 
                 entity.Property(e => e.IdQualification).HasColumnName("idQualification");
 

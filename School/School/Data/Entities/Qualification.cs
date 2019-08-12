@@ -10,7 +10,7 @@ namespace School.Data.Entities
         public int IdCourseNote { get; set; }
         public double? Qualification1 { get; set; }
 
-        public virtual Students IdCourseNoteNavigation { get; set; }
-        public virtual Students IdStudentNoteNavigation { get; set; }
+        public virtual Enrollments IdCourseNoteNavigation { get; set; }
+        public virtual Enrollments IdStudentNoteNavigation { get; set; }
     }
 }

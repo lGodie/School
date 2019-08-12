@@ -56,13 +56,16 @@
         }
     </tbody>
 </table>
+<br/>
+
+
 @if (Model.Qualification.Count == 0)
 {
-    <h5>No hay cursos matriculados.</h5>
+<h5>No hay cursos matriculados con calificación</h5>
 }
 else
 {
-    <h1>Cursos matriculados</h1>
+    <h1>Cursos matriculados con calificación</h1>
     <table class="table table-dark">
         <thead>
             <tr>
